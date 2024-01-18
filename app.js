@@ -1,10 +1,16 @@
-const eventEmitter = require('events');
-const customEventEmitter = new eventEmitter();
-customEventEmitter.on('response',()=>{
-    console.log('data recieved ');
-})
-customEventEmitter.on('response',()=>{  // we can create a much function we want  
-    console.log('another response ');
-})
+const {createReadStream} = require('fs');
 
-customEventEmitter.emit('response');
+
+const stream = createReadStream('./content/big.txt');
+
+
+//defult - 64kb
+//last buffer  - remainder
+//highWaterMark - control size 
+//const stream = createReadStream('./content/big.txt',{highWaterMark: 9000});
+//const stream = createReadStream('./content/big.txt',{ encoding: 'utf8' });
+
+stream.on('data',(res)=>{
+
+    console.log(res);
+})
